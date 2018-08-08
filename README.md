@@ -9,4 +9,4 @@ Creates HTML page with table including generated 100 fake users.
 
 Filters that table via search request. (Not yet)
 
-Still no support of Bootsrap.
+Boostrap is supported.
