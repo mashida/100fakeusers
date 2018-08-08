@@ -6,26 +6,22 @@ app = Flask(__name__)
 
 users = list()
 
-api_key = 'ALUI-UR40-40ZC-TFTW'
-api_ref = '1d09skuj'
-parameter_amount = '&results=25'
-
 
 #Code below is taking random name, lastname and email from special created API at randomapi.com
 #For now I turned off taking data from randomapi.com because my free account is limited and allows me to take only 500 requets per day.
 
-#for iter in range(1):
-#	random_api_link = 'https://randomapi.com/api/?key='+ api_key + '&ref=' + api_ref +'&fmt=json' + '&results=100'
-#	response = urllib.request.urlopen(random_api_link) 
-#	content = response.read() 
+randomuser_link = 'https://randomuser.me/api/?inc=name,email&results=100'
+response = urllib.request.urlopen(randomuser_link) 
+content = response.read() 
 
-#	data = json.loads(content)
+data = json.loads(content)
 
-#	for user in data['results']:
-#		users.append(user)
+for user in data['results']:
+	users.append({'name':user['name']['first'], 'lastname':user['name']['last'], 'email':user['email']})
 
 #So I use generated data in order to check if code works
 
+'''
 users = [
 {'name': 'Bridget', 'lastname': 'Bradtke', 'email': 'Antwan_Jacobson@hotmail.com'},
 {'name': 'Ole', 'lastname': 'Klein', 'email': 'Deshaun9@gmail.com'},
@@ -52,14 +48,11 @@ users = [
 {'name': 'Ethel', 'lastname': 'Blick', 'email': 'Mertie.Rodriguez15@gmail.com'},
 {'name': 'Lexus', 'lastname': 'Ernser', 'email': 'Bennie.Daniel27@hotmail.com'}
 ]
-
-email_sorted = sorted(users, key=lambda k: k['email'])
-name_sorted = sorted(users, key=lambda k: k['name'])
-lastname_sorted = sorted(users, key=lambda k: k['lastname'])
+'''
 
 @app.route("/")
 def home():
-    return render_template('home.html', users = name_sorted)
+    return render_template('home.html', users = users)
 
 @app.route("/about")
 def about():

@@ -3,22 +3,14 @@ import json
 
 users = list()
 
-api_key = 'ALUI-UR40-40ZC-TFTW'
-api_ref = '1d09skuj'
-parameter_amount = '&results=25'
+randomuser_link = 'https://randomuser.me/api/?inc=name,email&results=100'
+response = urllib.request.urlopen(randomuser_link) 
+content = response.read() 
 
+data = json.loads(content)
 
-for iter in range(1):
-#	random_api_link = 'https://randomapi.com/api/?key='+ api_key + '&ref=' + api_ref +'&fmt=json' + '&results=100'
-	randomuser_link = 'https://randomuser.me/api/?inc=name,email&results=100'
-	response = urllib.request.urlopen(randomuser_link) 
-	content = response.read() 
-
-	data = json.loads(content)
-
-	for user in data['results']:
-		#users.append(user)
-		print(user['email'])
+for user in data['results']:
+	users.append({'name':user['name']['first'], 'lastname':user['name']['last'], 'email':user['email']})
 
 #users = [
 #{'name': 'Bridget', 'lastname': 'Bradtke', 'email': 'Antwan_Jacobson@hotmail.com'},
@@ -47,19 +39,15 @@ for iter in range(1):
 #{'name': 'Lexus', 'lastname': 'Ernser', 'email': 'Bennie.Daniel27@hotmail.com'}
 #]
 
-
+'''
 email_sorted = sorted(users, key=lambda k: k['email'])
 name_sorted = sorted(users, key=lambda k: k['name':'first'])
 lastname_sorted = sorted(users, key=lambda k: k['name':'last'])
+'''
 
-
-
-print('='*20)
-print('Email sorted users\n')
-
-for user in email_sorted:
-	#print(user['email'] + " : " + user['name']['first'] + " " + user['name']['last'])
-	print(user)
+for user in users:
+	print(user['email'] + " : " + user['name'] + " " + user['lastname'])
+	#print(user)
 
 '''
 
